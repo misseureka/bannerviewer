@@ -1,17 +1,7 @@
 {
-    "name": "Screenshoter",
-    "version": "0.10",
+    "name": "Banner viewer",
+    "version": "0.20",
     "description": "Banner viewer for workers in RuTarget company",
-    "background": {
-        "persistent": false,
-        "scripts": ["background.js"]
-    },
-    "content_scripts": [
-        {
-            "matches": ["*://*/*"],
-            "js": ["viewer.js"]
-        }
-    ],
     "icons": {
         "16": "icons/viewer16.png",
         "24": "icons/viewer24.png",
