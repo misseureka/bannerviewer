@@ -1,3 +1,17 @@
 var iframes = document.getElementsByTagName( 'iframe' );
+var goodIframe = [];
+var rtgBanners = [];
 
-console.log( iframes.length, rtgBannerWidth, rtgBannerHeight );
+Object.keys( iframes ).forEach( function ( key ) {
+  var item = iframes[key];
+  if ( item.src && item.width == rtgBanner.width && item.height == rtgBanner.height ) {
+    goodIframe.push( {
+      item: item,
+      src: item.src
+    } );
+  }
+} );
+
+if ( goodIframe.length > 0 ) {
+  goodIframe[0].item.src = rtgBanner.src;  
+}

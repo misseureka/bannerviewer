@@ -1,10 +1,9 @@
 function insertBanner() {
-  var size = document.getElementsByTagName( 'select' )[0].value.split( ' x ' );
-  var width = size[0],
-    height = size[1];
+  var url = '//' + document.getElementById( 'url' ).value.split('//')[1],
+    size = document.getElementsByTagName( 'select' )[0].value.split( ' x ' );
 
   chrome.tabs.executeScript( null, {
-    code: 'var rtgBannerWidth=' + width + '; var rtgBannerHeight=' + height + ';'
+    code: 'var rtgBanner = {src: "' + url + '", width: ' + size[0] + ', height: ' + size[1] + '};'
   }, function () {
     chrome.tabs.executeScript( null, { file: 'insert.js' } );
   } );
