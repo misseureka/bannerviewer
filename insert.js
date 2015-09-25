@@ -15,3 +15,5 @@ Object.keys( iframes ).forEach( function ( key ) {
 if ( goodIframe.length > 0 ) {
   goodIframe[0].item.src = rtgBanner.src;  
 }
+
+goodIframe.length;
