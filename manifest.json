@@ -1,0 +1,31 @@
+{
+    "name": "Screenshoter",
+    "version": "0.10",
+    "description": "Banner viewer for workers in RuTarget company",
+    "background": {
+        "persistent": false,
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "js": ["viewer.js"]
+        }
+    ],
+    "icons": {
+        "16": "icons/viewer16.png",
+        "24": "icons/viewer24.png",
+        "48": "icons/viewer48.png",
+        "128": "icons/viewer128.png",
+        "256": "icons/viewer256.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/viewer24.png",
+        "default_title": "Insert banner on page!",
+		"default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs", "<all_urls>", "notifications"
+    ],
+    "manifest_version": 2
+}
