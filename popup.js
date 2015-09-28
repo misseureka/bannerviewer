@@ -4,10 +4,10 @@
 function validateForm(url, size) {
   var err = '';
 
-  if ( url.trim() ) {
-    err += 'Пожалуйста, введите url баннера.';
+  if ( !url.trim() ) {
+    err += 'Пожалуйста, введите url баннера.\n';
   }
-  if ( size.length <= 1 ) {
+  if ( !size ) {
     err += 'Пожалуйста, выберите размер баннера.';
   }
 
@@ -21,16 +21,34 @@ function validateForm(url, size) {
   }
 }
 
+function saveOptions( url, sizeIndex ) {
+  chrome.storage.sync.set( {rtgBannerOptions: {url: url, sizeIndex: sizeIndex}} );
+}
+
+function getOptions() {
+  chrome.storage.sync.get( 'rtgBannerOptions', function ( val ) {
+    var rtgBannerOptions = val.rtgBannerOptions;
+    if ( rtgBannerOptions.url ) {
+      document.getElementById( 'url' ).value = rtgBannerOptions.url;
+    }
+    if ( rtgBannerOptions.sizeIndex ) {
+      document.getElementsByTagName( 'select' )[0].value = rtgBannerOptions.sizeIndex;
+    }
+  } );  
+}
+
 function insertBanner() {  
   var url = document.getElementById( 'url' ).value,
-    size = document.getElementsByTagName( 'select' )[0].value.split( ' x ' );  
+    sizeIndex = document.getElementsByTagName( 'select' )[0].value;  
 
-  if ( validateForm( url, size ) ) {
-    url = '//' + url.split( '//' )[1];
-  }
-  else {
+  if ( !validateForm( url, sizeIndex ) ) {
     return;
-  } 
+  }
+
+  //saveOptions( url, sizeIndex );
+
+  url = '//' + url.split( '//' )[1];
+  var size = document.getElementsByTagName( 'select' )[0].options[sizeIndex].text.split( ' x ' );  
 
   chrome.tabs.executeScript( null, {
     code: 'var rtgBanner = {src: "' + url + '", width: ' + size[0] + ', height: ' + size[1] + '};'
@@ -80,14 +98,11 @@ function clearPage() {
   document.getElementById( 'url' ).value = '';
   document.getElementById( 'prev-btn' ).disabled = true;
   document.getElementById( 'next-btn' ).disabled = true;
-  chrome.tabs.executeScript( null, {
-    code: 'var currIndex =' + currentIframe + ';'
-  }, function () {
-    chrome.tabs.executeScript( null, { file: 'clear.js' } );
-  } );
+  chrome.tabs.executeScript( null, { file: 'clear.js' } );
 }
 
 document.addEventListener( 'DOMContentLoaded', function () {
+  //getOptions();
   document.getElementById( 'insert' ).addEventListener( 'click', insertBanner );
   document.getElementById( 'clear' ).addEventListener( 'click', clearPage );
   document.getElementById( 'next-btn' ).addEventListener( 'click', changeIframe );
