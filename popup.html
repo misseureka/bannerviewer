@@ -5,12 +5,49 @@
     <meta charset="utf-8" />
     <title></title>
   <style>
+    html,
+    body {
+      min-width: 270px;
+      margin: 0;
+      padding: 0;
+      font-family: Arial;
+      font-size: 13px;
+    }
+    input,
+    select {
+     padding: 3px 10px;
+     margin: 5px;
+    }
+    select {
+      width: 209px;
+    }
+    input[type=text] {
+      width: 185px;
+      display: inline-block;     
+    }
+    #clear {
+      display: inline-block;
+    }
+    .btn-block {
+      width: 209px;
+      text-align: center; 
+    }
+    #insert {
+      display: block;
+      margin: 0 auto;
+    }
+    #error {
+      color: red;
+      padding: 3px 10px;  
+    }
   </style>
     <script src="popup.js"></script>
 </head>
 <body>
   <input type="text" placeholder="Введите url баннера" id="url"/>
+  <input type="button" value="X" id="clear" />
   <select>
+    <option value="">Выберите размер баннера</option>
     <option>240 x 400</option>
     <option>300 x 600</option>
     <option>160 x 600</option>
@@ -21,8 +58,11 @@
     <option>728 x 90</option>
     <option>468 x 60</option>
   </select>
-  <input type="button" value="Показать" id="insert"/>
-  <input type="button" value="<---" id="prev-btn" class="nav" data-nav="-" disabled/>
-  <input type="button" value="--->" id="next-btn" class="nav" data-nav="+" disabled />
+  <div class="btn-block">
+    <input type="button" value="Показать" id="insert"/>
+    <input type="button" value="<---" id="prev-btn" class="nav" data-nav="-" disabled/>
+    <input type="button" value="--->" id="next-btn" class="nav" data-nav="+" disabled />
+  </div>
+  <div id="error"></div>
 </body>
 </html>

@@ -1,7 +1,5 @@
 var iframes = document.getElementsByTagName( 'iframe' );
 var goodIframe = [];
-var rtgBanners = [];
-
 
 for ( var i = 0; i < iframes.length; i++ ) {
   var item = iframes[i];

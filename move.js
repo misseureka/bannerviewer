@@ -1,5 +1,3 @@
-console.log( oldIndex, newIndex );
-
 --oldIndex;
 --newIndex;
 
