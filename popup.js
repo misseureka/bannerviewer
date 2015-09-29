@@ -51,7 +51,8 @@ function insertBanner() {
   var size = document.getElementsByTagName( 'select' )[0].options[sizeIndex].text.split( ' x ' );  
 
   chrome.tabs.executeScript( null, {
-    code: 'var rtgBanner = {src: "' + url + '", width: ' + size[0] + ', height: ' + size[1] + '};'
+    code: 'var rtgBanner = {src: \'' + url + '\', width: ' + size[0] + ', height: ' + size[1] + ', html:' +
+      '\'<iframe src=\"' + url + '\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" width=\"' + size[0] + 'px\" height=\"' + size[1] + 'px\"></iframe>\'};'
   }, function () {
     chrome.tabs.executeScript( null, { file: 'insert.js' }, function ( result ) {
       iframeCount = result;

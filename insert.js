@@ -1,18 +1,46 @@
-var iframes = document.getElementsByTagName( 'iframe' );
-var goodIframe = [];
-
-for ( var i = 0; i < iframes.length; i++ ) {
-  var item = iframes[i];
-  if ( item.width == rtgBanner.width && item.height == rtgBanner.height ) {
-    goodIframe.push( {
-      item: item,
-      src: item.src
-    } );
+function findParent( item, rtgBanner ) {
+  var parent = item.parentElement;
+  if ( parent.nodeName == "DIV" && parent.clientWidth == rtgBanner.width && parent.clientHeight == rtgBanner.height ) {
+    return { item: parent, html: parent.innerHTML, isIframe: false };
+  }
+  else {
+    return findParent( parent, rtgBanner );
   }
 }
 
-if ( goodIframe.length > 0 ) {
-  goodIframe[0].item.src = rtgBanner.src;
+function getGoodItems( items, goodItems, rtgBanner, getParent ) {
+  for ( var i = 0; i < items.length; i++ ) {
+    var item = items[i];
+    if ( item.clientWidth == rtgBanner.width && item.clientHeight == rtgBanner.height ) {
+      if ( getParent ) {
+        goodItems.push( findParent( item, rtgBanner ) );
+      }
+      else {
+        goodItems.push( {
+          item: item,
+          src: item.src,
+          isIframe: true
+        } );
+      }
+    }
+  }
 }
 
-goodIframe.length;
+var iframes = document.getElementsByTagName( 'iframe' ),
+  images = document.getElementsByTagName( 'img' );
+
+var goodItems = [];
+
+getGoodItems( iframes, goodItems, rtgBanner, false );
+getGoodItems( images, goodItems, rtgBanner, true );
+
+if ( goodItems.length > 0 ) {
+  if ( goodItems[0].isIframe ) {
+    goodItems[0].item.src = rtgBanner.src;
+  }
+  else {
+    goodItems[0].item.innerHTML = rtgBanner.html;
+  }
+}
+
+goodItems.length;
