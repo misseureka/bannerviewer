@@ -1,6 +1,14 @@
+function checkSize( item, rtgBanner ) {
+  return item.clientWidth >= rtgBanner.width - 5 && item.clientWidth <= rtgBanner.width + 5 &&
+    item.clientHeight >= rtgBanner.height - 5 && item.clientHeight <= rtgBanner.height + 5;
+}
+
 function findParent( item, rtgBanner ) {
   var parent = item.parentElement;
-  if ( parent.nodeName == "DIV" && parent.clientWidth == rtgBanner.width && parent.clientHeight == rtgBanner.height ) {
+  if ( !parent ) {
+    return;
+  }
+  if ( parent.nodeName == "DIV" && checkSize( item, rtgBanner ) ) {
     return { item: parent, html: parent.innerHTML, isIframe: false };
   }
   else {
@@ -11,7 +19,7 @@ function findParent( item, rtgBanner ) {
 function getGoodItems( items, goodItems, rtgBanner, getParent ) {
   for ( var i = 0; i < items.length; i++ ) {
     var item = items[i];
-    if ( item.clientWidth == rtgBanner.width && item.clientHeight == rtgBanner.height ) {
+    if ( checkSize( item, rtgBanner ) ) {
       if ( getParent ) {
         goodItems.push( findParent( item, rtgBanner ) );
       }

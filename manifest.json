@@ -1,6 +1,6 @@
 {
     "name": "Banner viewer",
-    "version": "0.53",
+    "version": "0.58",
     "description": "Banner viewer for workers in RuTarget company",
     "icons": {
         "16": "icons/viewer16.png",
